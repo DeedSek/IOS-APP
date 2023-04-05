@@ -1,0 +1,199 @@
+import UIKit
+import AVFoundation
+
+class ViewController: UIViewController {
+    
+    // UI elements
+    @IBOutlet weak var countdownLabel: UILabel!
+    @IBOutlet weak var hoursTextField: UITextField!
+    @IBOutlet weak var minutesTextField: UITextField!
+    @IBOutlet weak var secondsTextField: UITextField!
+    @IBOutlet weak var startButton: UIButton!
+    @IBOutlet weak var stopButton: UIButton!
+    @IBOutlet weak var resetButton: UIButton!
+    @IBOutlet weak var hideButton: UIButton!
+    
+    // Timer variables
+    var timer: Timer?
+    var totalSeconds = 0
+    var soundPlayer: AVAudioPlayer?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        
+        // Set up the UI elements
+        countdownLabel.font = UIFont(name: "Orbitron", size: 100)
+        countdownLabel.textColor = .white
+        countdownLabel.layer.shadowColor = UIColor.green.cgColor
+        countdownLabel.layer.shadowOffset = CGSize(width: 0, height: 0)
+        countdownLabel.layer.shadowRadius = 20
+        countdownLabel.layer.shadowOpacity = 1
+        
+        hoursTextField.font = UIFont(name: "Orbitron", size: 40)
+        hoursTextField.textColor = .white
+        hoursTextField.backgroundColor = .black
+        hoursTextField.textAlignment = .center
+        
+        minutesTextField.font = UIFont(name: "Orbitron", size: 40)
+        minutesTextField.textColor = .white
+        minutesTextField.backgroundColor = .black
+        minutesTextField.textAlignment = .center
+        
+        secondsTextField.font = UIFont(name: "Orbitron", size: 40)
+        secondsTextField.textColor = .white
+        secondsTextField.backgroundColor = .black
+        secondsTextField.textAlignment = .center
+        
+        startButton.titleLabel?.font = UIFont(name: "Orbitron", size: 40)
+        startButton.setTitleColor(.white, for: .normal)
+        startButton.backgroundColor = .black
+        
+        stopButton.titleLabel?.font = UIFont(name: "Orbitron", size: 40)
+        stopButton.setTitleColor(.white, for: .normal)
+        stopButton.backgroundColor = .black
+        
+        resetButton.titleLabel?.font = UIFont(name: "Orbitron", size: 40)
+        resetButton.setTitleColor(.white, for: .normal)
+        resetButton.backgroundColor = .black
+        
+        hideButton.titleLabel?.font = UIFont(name: "Orbitron", size: 40)
+        hideButton.setTitleColor(.white, for: .normal)
+        hideButton.backgroundColor = .black
+        
+        // Load the sound file
+        if let soundURL = Bundle.main.url(forResource: "alarm", withExtension: "mp3") {
+            do {
+                soundPlayer = try AVAudioPlayer(contentsOf: soundURL)
+            } catch {
+                print("Error loading sound file")
+            }
+            
+        }
+        
+    }
+    
+    // Start the timer
+    @IBAction func startTimer(_ sender: UIButton) {
+        
+        // Get the input values from the text fields
+        let hours = Int(hoursTextField.text ?? "0") ?? 0
+        let minutes = Int(minutesTextField.text ?? "0") ?? 0
+        let seconds = Int(secondsTextField.text ?? "0") ?? 0
+        
+        // Calculate the total seconds
+        totalSeconds = hours * 3600 + minutes * 60 + seconds
+        
+        // Check if the input is valid and positive
+        if totalSeconds <= 0 {
+            showAlert(message: "Please enter a positive time")
+            return
+        }
+        
+        // Disable the start button
+        startButton.isEnabled = false
+        
+        // Create and start the timer
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+            
+            // Decrement the total seconds by one
+            self.totalSeconds -= 1
+            
+            // Calculate the hours, minutes and seconds from the total seconds
+            let h = self.totalSeconds / 3600
+            let m = (self.totalSeconds % 3600) / 60
+            let s = self.totalSeconds % 60
+            
+            // Update the countdown label with the formatted time string
+            self.countdownLabel.text = String(format:"%02d :%02d :%02d", h, m, s)
+            
+            // Check if the timer is finished
+            if self.totalSeconds == 0 {
+                
+                // Stop and invalidate the timer
+                timer.invalidate()
+                
+                // Enable the start button again
+                self.startButton.isEnabled = true
+                
+Received message. I'll try to create that. Here is the code for an iOS app that looks like the HTML countdown. You will need Xcode and Swift to run this code. ```swift import UIKit import AVFoundation class ViewController: UIViewController { // UI elements @IBOutlet weak var countdownLabel: UILabel! @IBOutlet weak var hoursTextField: UITextField! @IBOutlet weak var minutesTextField: UITextField! @IBOutlet weak var secondsTextField: UITextField! @IBOutlet weak var startButton: UIButton! @IBOutlet weak var stopButton: UIButton! @IBOutlet weak var resetButton: UIButton! @IBOutlet weak var hideButton: UIButton! // Timer variables var timer: Timer? var totalSeconds = 0 var soundPlayer: AVAudioPlayer? override func viewDidLoad() { super.viewDidLoad() // Do any additional setup after loading the view. // Set up the UI elements countdownLabel.font = UIFont(name: "Orbitron", size: 100) countdownLabel.textColor = .white countdownLabel.layer.shadowColor = UIColor.green.cgColor countdownLabel.layer.shadowOffset = CGSize(width: 0, height: 0) countdownLabel.layer.shadowRadius = 20 countdownLabel.layer.shadowOpacity = 1 hoursTextField.font = UIFont(name: "Orbitron", size: 40) hoursTextField.textColor = .white hoursTextField.backgroundColor = .black hoursTextField.textAlignment = .center minutesTextField.font = UIFont(name: "Orbitron", size: 40) minutesTextField.textColor = .white minutesTextField.backgroundColor = .black minutesTextField.textAlignment = .center secondsTextField.font = UIFont(name: "Orbitron", size: 40) secondsTextField.textColor = .white secondsTextField.backgroundColor = .black secondsTextField.textAlignment = .center startButton.titleLabel?.font = UIFont(name: "Orbitron", size: 40) startButton.setTitleColor(.white, for: .normal) startButton.backgroundColor = .black stopButton.titleLabel?.font = UIFont(name: "Orbitron", size: 40) stopButton.setTitleColor(.white, for: .normal) stopButton.backgroundColor = .black resetButton.titleLabel?.font = UIFont(name: "Orbitron", size: 40) resetButton.setTitleColor(.white, for: .normal) resetButton.backgroundColor = .black hideButton.titleLabel?.font = UIFont(name: "Orbitron", size: 40) hideButton.setTitleColor(.white, for: .normal) hideButton.backgroundColor = .black // Load the sound file if let soundURL = Bundle.main.url(forResource: "alarm", withExtension: "mp3") { do { soundPlayer = try AVAudioPlayer(contentsOf: soundURL) } catch { print("Error loading sound file") } } } // Start the timer @IBAction func startTimer(_ sender: UIButton) { // Get the input values from the text fields let hours = Int(hoursTextField.text ?? "0") ?? 0 let minutes = Int(minutesTextField.text ?? "0") ?? 0 let seconds = Int(secondsTextField.text ?? "0") ?? 0 // Calculate the total seconds totalSeconds = hours * 3600 + minutes * 60 + seconds // Check if the input is valid and positive if totalSeconds <= 0 { showAlert(message: "Please enter a positive time") return } // Disable the start button startButton.isEnabled = false // Create and start the timer timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in // Decrement the total seconds by one self.totalSeconds -= 1 // Calculate the hours, minutes and seconds from the total seconds let h = self.totalSeconds / 3600 let m = (self.totalSeconds % 3600) / 60 let s = self.totalSeconds % 60 // Update the countdown label with the formatted time string self.countdownLabel.text = String(format:"%02d :%02d :%02d", h, m, s) // Check if the timer is finished if self.totalSeconds == 0 { // Stop and invalidate the timer timer.invalidate() // Enable the start button again self.startButton.isEnabled = true
+2
+of
+20
+
+Like
+Dislike
+ShareMore
+continue your last sentence
+Sent message. continue your last sentence
+Sorry, I was interrupted. I was saying:
+
+// Play the sound file self.soundPlayer?.play()
+
+            // Show an alert message
+            self.showAlert(message: "Time's up!")
+        }
+    }
+}
+
+// Stop the timer
+@IBAction func stopTimer(_ sender: UIButton) {
+    
+    // Check if the timer is running
+    if let timer = timer {
+        
+        // Stop and invalidate the timer
+        timer.invalidate()
+        
+        // Enable the start button again
+        startButton.isEnabled = true
+    }
+}
+
+// Reset the timer
+@IBAction func resetTimer(_ sender: UIButton) {
+    
+    // Check if the timer is running
+    if let timer = timer {
+        
+        // Stop and invalidate the timer
+        timer.invalidate()
+        
+        // Enable the start button again
+        startButton.isEnabled = true
+    }
+    
+    // Reset the countdown label to zero
+    countdownLabel.text = "00 :00 :00"
+    
+    // Reset the text fields to zero
+    hoursTextField.text = "0"
+    minutesTextField.text = "0"
+    secondsTextField.text = "0"
+}
+
+// Hide the controls
+@IBAction func hideControls(_ sender: UIButton) {
+    
+    // Hide all the UI elements except the countdown label
+    hoursTextField.isHidden = true
+    minutesTextField.isHidden = true
+    secondsTextField.isHidden = true
+    startButton.isHidden = true
+    stopButton.isHidden = true
+    resetButton.isHidden = true
+    hideButton.isHidden = true
+    
+}
+
+// Show an alert with a message
+func showAlert(message: String) {
+    
+    // Create an alert controller with the message and an OK button
+    let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "OK", style: .default))
+    
+    // Present the alert on the screen
+    present(alert, animated: true)
+}
+}
